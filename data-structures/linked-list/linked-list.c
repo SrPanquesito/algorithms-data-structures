@@ -14,40 +14,56 @@ Node * insertHead(Node * head) {
     return temp;
 }
 
-Node * insertLastNode(Node * head, Node * lastnode) {
+void insertLastNode(Node * head) {
     Node * temp = (Node*)malloc(sizeof(Node));
     printf("Value number: ");
     scanf("%d", &(*temp).data);
     temp->next = NULL;
 
-    if (lastnode == NULL) {
-        while (head->next != NULL) {
-            head = head->next;
-        }
-        head->next = temp;
+    while (head->next != NULL) {
+        head = head->next;
     }
-    else {
-        lastnode->next = temp;
-    }
-
-    return temp;
+    head->next = temp;
 }
 
-void insertNode(Node * current_node, int pos, int val) {
+Node * deleteNode(Node * head, int pos) {
+    Node * node = head;
+    Node * nextNode = node->next;
+    int c = 0;
+
+    if (pos > 0 && nextNode != NULL) {
+        while (c < pos-1) {
+            if (nextNode->next == NULL) break;
+            node = nextNode;
+            nextNode = nextNode->next;
+            c++;
+        }
+        node->next = nextNode->next;
+        free(nextNode);
+    }
+    else {
+        head = node->next;
+        free(node);
+    }
+
+    return head;
+}
+
+void insertNode(Node * node, int pos, int val) {
     if (pos != 0) {
         Node * temp = (Node*)malloc(sizeof(Node));
         temp->data = val;
         temp->next = NULL;
 
         for (int c=0; c < pos-1; c++) {
-            if (current_node->next != NULL) current_node = current_node->next;
+            if (node->next != NULL) node = node->next;
         }
 
-        temp->next = current_node->next;
-        current_node->next = temp;
+        temp->next = node->next;
+        node->next = temp;
     }
     else {
-        printf("\n\n---Position #0 is reserved for head. If you want to insert a new head please use option (1)---\n\n");
+        printf("\n\n-----Position #0 is reserved for head. If you want to insert a new head please use option (1)-----\n\n");
     }
 }
 
@@ -73,7 +89,6 @@ void printList(Node * head) {
 
 int main() {
     Node * head = NULL;
-    Node * lastnode = NULL;
 
     int op;
     while (op != 0) {
@@ -81,41 +96,60 @@ int main() {
         printf("1) Insert head at the beggining. \n");
         printf("2) Insert node at the end. \n");
         printf("3) Insert node at # position. \n");
+        printf("4) Delete node at # position. \n");
         printf("9) Print list. \n");
         printf("0) Exit. \n");
-        scanf("%d", &op);
-        printf("\n");
+        if (scanf("%d", &op) != 1) {
+            printf("\n");
+            printf("Input is not a number.\n");
+            return EXIT_FAILURE;
+        } else {
+            printf("\n");
+            if (op == 1) {
+                head = insertHead(head);
+            }
+            else if (op == 2) {
+                if (head != NULL) {
+                    insertLastNode(head);
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
+            }
+            else if (op == 3) {
+                if (head != NULL) {
+                    insertNodeMenu(head);
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
+            }
+            else if (op == 4) {
+                if (head != NULL) {
+                    int pos;
+                    printf("Position #: ");
+                    scanf("%d", &pos);
+                    head = deleteNode(head, pos);
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
+            }
+            else if (op == 5) {
+            }
+            else if (op == 9) {
+                if (head != NULL) {
+                    printList(head);
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
+            }
+            else if (op != 0) {
+                printf("\n-----Please insert a valid option.-----\n\n");
+            }
+        }
         
-        if (op == 1) {
-            head = insertHead(head);
-        }
-        else if (op == 2) {
-            if (head != NULL) {
-                lastnode = insertLastNode(head, lastnode);
-            }
-            else {
-                printf("\n-----Define a head first.-----\n\n");
-            }
-        }
-        else if (op == 3) {
-            if (head != NULL) {
-                insertNodeMenu(head);
-            }
-            else {
-                printf("\n-----Define a head first.-----\n\n");
-            }
-        }
-        else if (op == 9) {
-            if (head != NULL) {
-                printList(head);
-            }
-            else {
-                printf("\n-----Define a head first.-----\n\n");
-            }
-        }
-        else if (op != 0) {
-            printf("\n-----Please insert a valid option.-----\n\n");
-        }
     }
 
     return 0;
