@@ -49,6 +49,20 @@ Node * deleteNode(Node * head, int pos) {
     return head;
 }
 
+Node * reverseList(Node * head) {
+    Node * prev = NULL, * current, * next;
+    current = head;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+
+    return prev;
+}
+
 void insertNode(Node * node, int pos, int val) {
     if (pos != 0) {
         Node * temp = (Node*)malloc(sizeof(Node));
@@ -97,6 +111,7 @@ int main() {
         printf("2) Insert node at the end. \n");
         printf("3) Insert node at # position. \n");
         printf("4) Delete node at # position. \n");
+        printf("5) Reverse list. \n");
         printf("9) Print list. \n");
         printf("0) Exit. \n");
         if (scanf("%d", &op) != 1) {
@@ -136,6 +151,12 @@ int main() {
                 }
             }
             else if (op == 5) {
+                if (head != NULL) {
+                    head = reverseList(head);
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
             }
             else if (op == 9) {
                 if (head != NULL) {
