@@ -101,6 +101,19 @@ void printList(Node * head) {
     printf("\n\n\n");
 }
 
+void printListRecursive(Node * node, int reversed) {
+    if (node == NULL) {
+        return;
+    }
+    if (reversed != 0) {
+        printListRecursive(node->next, reversed);
+        printf("%d ", node->data);
+    } else {
+        printf("%d ", node->data);
+        printListRecursive(node->next, reversed);
+    }
+}
+
 int main() {
     Node * head = NULL;
 
@@ -112,6 +125,8 @@ int main() {
         printf("3) Insert node at # position. \n");
         printf("4) Delete node at # position. \n");
         printf("5) Reverse list. \n");
+        printf("7) Print list (recursive). \n");
+        printf("8) Print list reverse (recursive). \n");
         printf("9) Print list. \n");
         printf("0) Exit. \n");
         if (scanf("%d", &op) != 1) {
@@ -153,6 +168,26 @@ int main() {
             else if (op == 5) {
                 if (head != NULL) {
                     head = reverseList(head);
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
+            }
+            else if (op == 7) {
+                if (head != NULL) {
+                    printf("\n-----List be like:-----\n");
+                    printListRecursive(head, 0);
+                    printf("\n\n");
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
+            }
+            else if (op == 8) {
+                if (head != NULL) {
+                    printf("\n-----List be like:-----\n");
+                    printListRecursive(head, 1);
+                    printf("\n\n");
                 }
                 else {
                     printf("\n-----Define a head first.-----\n\n");
