@@ -63,6 +63,17 @@ Node * reverseList(Node * head) {
     return prev;
 }
 
+Node * reverseListRecursive(Node * node, Node * prev) {
+    if (node->next == NULL) {
+        node->next = prev;
+        return node;
+    }
+    Node * temp = node->next;
+    node->next = prev;
+    prev = node;
+    return reverseListRecursive(temp, prev);
+}
+
 void insertNode(Node * node, int pos, int val) {
     if (pos != 0) {
         Node * temp = (Node*)malloc(sizeof(Node));
@@ -125,6 +136,7 @@ int main() {
         printf("3) Insert node at # position. \n");
         printf("4) Delete node at # position. \n");
         printf("5) Reverse list. \n");
+        printf("6) Reverse list (recursive). \n");
         printf("7) Print list (recursive). \n");
         printf("8) Print list reverse (recursive). \n");
         printf("9) Print list. \n");
@@ -168,6 +180,14 @@ int main() {
             else if (op == 5) {
                 if (head != NULL) {
                     head = reverseList(head);
+                }
+                else {
+                    printf("\n-----Define a head first.-----\n\n");
+                }
+            }
+            else if (op == 6) {
+                if (head != NULL) {
+                    head = reverseListRecursive(head, NULL);
                 }
                 else {
                     printf("\n-----Define a head first.-----\n\n");
