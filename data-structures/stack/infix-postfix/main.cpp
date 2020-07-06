@@ -134,6 +134,8 @@ int main() {
     cout << "Writte an aritmetic operation:\n\n";
     fgets(str, MAX_SIZE, stdin);
 
-    printf("%s", infixToPostfix(str, &s));
+    const char * newStr = infixToPostfix(str, &s);
+    printf("%s", newStr);
+
     return 0;
 }
