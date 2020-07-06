@@ -4,7 +4,7 @@
 // -------- ONLY 0 - 9 numbers and + - * / basic operators. -----------
 #include <iostream>
 #include <stack>
-#define MAX_SIZE 1001
+#define MAX_SIZE 255
 using namespace std;
 
 // True or false if character is operator or sparator
