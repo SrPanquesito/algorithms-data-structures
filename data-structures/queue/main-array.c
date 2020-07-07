@@ -65,12 +65,11 @@ void enQueue(int val, int arr[], int * front, int * back) {
     else if (isEmpty(front, back)) {
         *front = 0;
         *back = 0;
-        arr[*back] = val;
     }
     else {
         *back = (*back + 1) % MAX_SIZE;
-        arr[*back] = val;
     }
+    arr[*back] = val;
 }
 
 void deQueue(int arr[], int * front, int * back) {
