@@ -49,6 +49,32 @@ int minVal(Node * current) {
     }
 }
 
+int maxVal(Node * current) {
+    if (current->right == NULL) {
+        return current->data;
+    }
+    else {
+        return maxVal(current->right);
+    }
+}
+
+int maxCompare(int v1, int v2) {
+    if (v1 <= v2) {
+        return v2;
+    }
+    else {
+        return v1;
+    }
+}
+
+// Still don't get the maxCompare func. recursion
+int findHeight(Node * current) {
+    if (current == NULL) {
+        return -1;
+    }
+    return maxCompare(findHeight(current->left), findHeight(current->right)) + 1;
+}
+
 int main() {
     Node * root = NULL;
 
@@ -61,8 +87,10 @@ int main() {
     
     printf("%d\n", search(root, 20));
 
-    printf("%d", minVal(root));
-    //printf("%d", maxVal(root));
+    printf("%d\n", minVal(root));
+    printf("%d\n", maxVal(root));
+    
+    printf("Height: %d\n", findHeight(root));
 
     return 0;
 }
