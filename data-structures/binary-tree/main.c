@@ -75,6 +75,30 @@ int findHeight(Node * current) {
     return maxCompare(findHeight(current->left), findHeight(current->right)) + 1;
 }
 
+// DLR
+void preOrder(Node * node) {
+    if (node == NULL) return;
+    printf("%d\n", node->data);
+    preOrder(node->left);
+    preOrder(node->right);
+}
+
+// LDR
+void inOrder(Node * node) {
+    if (node == NULL) return;
+    inOrder(node->left);
+    printf("%d\n", node->data);
+    inOrder(node->right);
+}
+
+// LRD
+void postOrder(Node * node) {
+    if (node == NULL) return;
+    postOrder(node->left);
+    postOrder(node->right);
+    printf("%d\n", node->data);
+}
+
 int main() {
     Node * root = NULL;
 
