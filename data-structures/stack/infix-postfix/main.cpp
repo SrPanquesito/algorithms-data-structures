@@ -10,10 +10,6 @@ using namespace std;
 // True or false if character is operator or sparator
 int isOperator(char * ch) {
     if (
-        // () [] {}
-        *ch == 40 || *ch == 41 ||
-        *ch == 91 || *ch == 93 ||
-        *ch == 123 || *ch == 125 ||
         // * + - / 
         *ch == 42 || *ch == 43 || *ch == 45 || *ch == 47 
         ) {
@@ -22,8 +18,21 @@ int isOperator(char * ch) {
         return 0;
     }
 }
+int isSeparator(char * ch) {
+    if (
+        // () [] {}
+        *ch == 40 || *ch == 41 ||
+        *ch == 91 || *ch == 93 ||
+        *ch == 123 || *ch == 125
+        ) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
 int isOpeningSeparator(char ch) {
     if (
+        // ( [ {
         ch == 40 ||
         ch == 91 ||
         ch == 123
@@ -60,9 +69,10 @@ int matchingSeparators(char stackCh, char ch) {
     }
 }
 
-const char * infixToPostfix(char str[], stack<char> * s) {
+char * infixToPostfix(char str[], stack<char> * s) {
     int i = 0, c = 0, error = 0;
-    static char postfix[MAX_SIZE];
+    // char postfix[MAX_SIZE];
+    char * postfix = (char*)malloc(MAX_SIZE);
 
     while (str[i] != '\0' && str[i] != '\n' && str[i] != 0) {
         // If space or number (operand)
@@ -74,8 +84,8 @@ const char * infixToPostfix(char str[], stack<char> * s) {
                 c++;
             }
         }
-        // If separator or operator
-        else if (isOperator(&str[i])) {
+        // If operator or separator
+        else if (isOperator(&str[i]) || isSeparator(&str[i])) {
             // Closing separators
             if (str[i] == 41 || str[i] == 93 || str[i] == 125) {
                 while(!s->empty() && !matchingSeparators(s->top(), str[i])) {
@@ -111,7 +121,7 @@ const char * infixToPostfix(char str[], stack<char> * s) {
     }
 
     if (error) {
-        static char err[] = {'E', 'R', 'R', 'O', 'R', '\0'};
+        char err[] = {'E', 'R', 'R', 'O', 'R', '\0'};
         return err;
     }
     else {
@@ -126,6 +136,23 @@ const char * infixToPostfix(char str[], stack<char> * s) {
     }
 }
 
+void postfix(char str[]) {
+    stack<int> s;
+    int i = 0, op1 = 0, op2 = 0;
+    while(str[i] != '\0') {
+        if (str[i] >= 48 && str[i] <= 57) {
+            s.push((int)str[i]-48);
+        }
+        else if (isOperator(&str[i])) {
+            op1 = s.top(); s.pop();
+            op2 = s.top(); s.pop();
+            // float res = doOperation(str[i], op1, op2);
+        }
+        else {}
+        i++;
+    }
+}
+
 int main() {
     system("cls");
 
@@ -134,8 +161,10 @@ int main() {
     cout << "Writte an aritmetic operation:\n\n";
     fgets(str, MAX_SIZE, stdin);
 
-    const char * newStr = infixToPostfix(str, &s);
-    printf("%s", newStr);
+    char * newStr = infixToPostfix(str, &s);
+    printf("%s\n", newStr);
+
+    //postfix(newStr);
 
     return 0;
 }

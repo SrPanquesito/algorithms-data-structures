@@ -3,16 +3,19 @@
 #define MAX_SIZE 11
 
 int main() {
-    char str[MAX_SIZE];
-    printf("Capture a string: \n");
-    scanf("%s", &str);
-    printf("\n");
+    int op1 = 3, op2 = 5, res;
 
-    int lon = 0;
-    while(str[lon] != '\0') {
-        printf("%c", str[lon]);
-        lon++;
+    // For base 2 any previous number in binary is a complement of the current number
+    // 16 => 1 0000
+    // 15 => 0 1111
+    // Apply AND operator
+    if ((op2 != 0) && (op2 & (op2-1) == 0)) {
+        
+    } else {
+
     }
+
+    printf("%d", x);
 
     return 0;
 }

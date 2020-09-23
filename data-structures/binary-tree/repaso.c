@@ -118,8 +118,39 @@ Node * deleteNode(Node * root, int data) {
     }
 }
 
+int* preorderTraversal(struct Node* root, int returnSize){
+    int * arr = (int*)malloc(returnSize * sizeof(int));
+    int c = 0;
+    struct Node * current = root;
+    
+    while (c < returnSize) {
+        arr[c] = current->data; // n
+        if (current->left) {
+            current = current->left;
+            c++;
+        } // l
+        else if (current->right) {
+            current = current->right;
+            c++;
+        } // r
+    }
+    
+    return arr;
+}
+
 int main() {
     Node * root = NULL;
+
+    insertNode(&root, 1);
+    insertNode(&root, 2);
+    insertNode(&root, 3);
+
+    int z = 3;
+    int *p = preorderTraversal(root, z);
+    for (int i = 0; i < z; i++ ) {
+      printf( "*(p + %d) : %d\n", i, *(p + i));
+   }
+
     insertNode(&root, 10);
     insertNode(&root, 4);
     insertNode(&root, 3);
