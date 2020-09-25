@@ -10,7 +10,7 @@
 # 2. Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.
 # 3. No larger disk may be placed on top of a smaller disk.
 
-rod1 = [1,[3,2,1]]
+rod1 = [1,[5,4,3,2,1]]
 rod2 = [2,[]]
 rod3 = [3,[]]
 
@@ -22,16 +22,12 @@ def hanoi(discos, aAct, aMov, aTemp):
     # print(rod3[1])
     # print("----------------")
 
-    if len(aAct[1]) != 0:
-        if len(aMov[1]) == 0: 
-            aMov[1].append(aAct[1].pop())
-            print(aAct[0]," -> ",aMov[0])
-        elif aAct[1][-1] < aMov[1][-1]: 
-            aMov[1].append(aAct[1].pop())
-            print(aAct[0]," -> ",aMov[0])
-        else: 
-            aAct[1].append(aMov.pop())
-            print(aMov[0]," -> ",aAct[0])
+    print("Faltan ", discos, " pasos. ", end=" ")
+ 
+    aMov[1].append(aAct[1].pop())
+    print(aAct[0]," -> ",aMov[0])
+
+    print("Faltan ", discos-1, " pasos. ", end=" ")
 
     if len(aAct[1]) != 0:
         if len(aTemp[1]) == 0: 
@@ -49,13 +45,14 @@ def hanoi(discos, aAct, aMov, aTemp):
     else:
         return
     
-    hanoi(discos, aMov, aTemp, aAct)
+    hanoi(discos-2, aMov, aTemp, aAct)
 
 
 # ~~~ MAIN ~~~
 print("---- Inicio ----")
-hanoi(len(rod1), rod1, rod2, rod3)
+hanoi((2**len(rod1[1]))-1, rod1, rod2, rod3)
 
+print("")
 print("----- Fin -----")
 print(rod1[1])
 print(rod2[1])
