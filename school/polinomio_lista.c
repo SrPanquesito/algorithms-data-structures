@@ -67,7 +67,7 @@ Node * eliminateByCoeficiente(Node * head, float data) {
     return head;
 }
 
-Node * eliminateByExponencial(Node * head, float data) {
+Node * eliminateByGrado(Node * head, float data) {
     Node * temp = NULL;
     Node * node = head;
 
@@ -75,7 +75,7 @@ Node * eliminateByExponencial(Node * head, float data) {
 
     if (head->exp == data) {
         temp = head->next;
-        printf("\nNodo con exponente %.1f eliminado.\n", head->exp);
+        printf("\nNodo de grado %.0f eliminado.\n", head->exp);
         getchar();
         free(head);
         return temp;
@@ -85,7 +85,7 @@ Node * eliminateByExponencial(Node * head, float data) {
         if (node->next->exp == data) {
             temp = node->next;
             node->next = temp->next;
-            printf("\nNodo con exponente %.1f eliminado.\n", temp->exp);
+            printf("\nNodo de grado %.0f eliminado.\n", temp->exp);
             getchar();
             free(temp);
             return head;
@@ -93,7 +93,7 @@ Node * eliminateByExponencial(Node * head, float data) {
         node = node->next;
     }
 
-    printf("\nNo se encontro el nodo con el exponente especificado.\n");
+    printf("\nNo se encontro el nodo con el grado especificado.\n");
     getchar();
     return head;
 }
@@ -106,6 +106,30 @@ void printList(Node * head) {
         printf("Next: %p\n", head->next);
         printf("\n");
         head = head->next;
+    }
+}
+
+void printTable(Node * head) {
+    Node * node = head;
+
+    while (node != NULL)
+    {
+        printf("-------------");
+        node = node->next;
+    }
+    printf("\n|");
+    node = head;
+    while (node != NULL)
+    {
+        printf(" %+.1f | %.1f |", node->cst, node->exp);
+        node = node->next;
+    }
+    printf("\n");
+    node = head;
+    while (node != NULL)
+    {
+        printf("-------------");
+        node = node->next;
     }
 }
 
@@ -141,6 +165,7 @@ int main() {
         printf("4) Generar tabla de valores.\n");
         printf("5) Eliminar termino por coeficiente.\n");
         printf("6) Eliminar termino por grado.\n");
+        printf("9) Ver lista.\n");
         printf("0) Salir.\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         scanf("%d", &op);
@@ -162,7 +187,7 @@ int main() {
             getchar();getchar();
             break;
         case 4:
-            printList(head);
+            printTable(head);
             getchar();getchar();
             break;
         case 5:
@@ -172,10 +197,14 @@ int main() {
             getchar();
             break;
         case 6:
-            printf("Exponente a eliminar: ");
+            printf("Grado a eliminar: ");
             scanf("%f", &data);
-            head = eliminateByExponente(head, data);
+            head = eliminateByGrado(head, data);
             getchar();
+            break;
+        case 9:
+            printList(head);
+            getchar();getchar();
             break;
         }
     }
