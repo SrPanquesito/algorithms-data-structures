@@ -193,36 +193,39 @@ Node * orderPromedio(Node * head) {
 }
 
 void printOrderPromedio(Node * head) {
-    /* 
-        Copia lista enlazada a otro espacio de memoria para no perder la original
-    */
-    Node * newHead = (Node*)malloc(sizeof(Node));
-    Node * temp = newHead;
+    if (head != NULL) {
+        if (head->next != NULL) {
+            /* 
+                Copia lista enlazada a otro espacio de memoria para no perder la original
+            */
+            Node * newHead = (Node*)malloc(sizeof(Node));
+            Node * temp = newHead;
 
-    strcpy(newHead->nombre, head->nombre);
-    newHead->promedio = head->promedio;
-    newHead->next = NULL;
-    newHead->prev = NULL;
+            strcpy(newHead->nombre, head->nombre);
+            newHead->promedio = head->promedio;
+            newHead->next = NULL;
+            newHead->prev = NULL;
 
-    head = head->next;
+            head = head->next;
 
-    while (head != NULL) {
-        Node * newNode = (Node*)malloc(sizeof(Node));
-        temp->next = newNode;
+            while (head != NULL) {
+                Node * newNode = (Node*)malloc(sizeof(Node));
+                temp->next = newNode;
 
-        strcpy(newNode->nombre, head->nombre);
-        newNode->promedio = head->promedio;
-        newNode->next = NULL;
-        newNode->prev = temp;
+                strcpy(newNode->nombre, head->nombre);
+                newNode->promedio = head->promedio;
+                newNode->next = NULL;
+                newNode->prev = temp;
 
-        head = head->next;
-        temp = temp->next;
+                head = head->next;
+                temp = temp->next;
+            }
+
+            newHead = orderPromedio(newHead);
+            prettyPrint(newHead);
+            printList(newHead);
+        }
     }
-
-    newHead = orderPromedio(newHead);
-
-    prettyPrint(newHead);
-    printList(newHead);
 }
 
 /*
@@ -285,36 +288,40 @@ Node * orderNombre(Node * head) {
 }
 
 void printOrderNombre(Node * head) {
-    /* 
-        Copia lista enlazada a otro espacio de memoria para no perder la original
-    */
-    Node * newHead = (Node*)malloc(sizeof(Node));
-    Node * temp = newHead;
+    if (head != NULL) {
+        if (head->next != NULL) {
+            /* 
+                Copia lista enlazada a otro espacio de memoria para no perder la original
+            */
+            Node * newHead = (Node*)malloc(sizeof(Node));
+            Node * temp = newHead;
 
-    strcpy(newHead->nombre, head->nombre);
-    newHead->promedio = head->promedio;
-    newHead->next = NULL;
-    newHead->prev = NULL;
+            strcpy(newHead->nombre, head->nombre);
+            newHead->promedio = head->promedio;
+            newHead->next = NULL;
+            newHead->prev = NULL;
 
-    head = head->next;
+            head = head->next;
 
-    while (head != NULL) {
-        Node * newNode = (Node*)malloc(sizeof(Node));
-        temp->next = newNode;
+            while (head != NULL) {
+                Node * newNode = (Node*)malloc(sizeof(Node));
+                temp->next = newNode;
 
-        strcpy(newNode->nombre, head->nombre);
-        newNode->promedio = head->promedio;
-        newNode->next = NULL;
-        newNode->prev = temp;
+                strcpy(newNode->nombre, head->nombre);
+                newNode->promedio = head->promedio;
+                newNode->next = NULL;
+                newNode->prev = temp;
 
-        head = head->next;
-        temp = temp->next;
+                head = head->next;
+                temp = temp->next;
+            }
+
+            newHead = orderNombre(newHead);
+
+            prettyPrint(newHead);
+            printList(newHead);
+        }
     }
-
-    newHead = orderNombre(newHead);
-
-    prettyPrint(newHead);
-    printList(newHead);
 }
 
 int main() {
@@ -325,7 +332,8 @@ int main() {
     int op = 10;
     while (op != 0) {
         system("cls");
-        printf("~~~~~~~~~~~~~~~ MENU ~~~~~~~~~~~~~~~\n");
+        printf("Luis Diaz Reynoso #1260642\n\n");
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~ MENU ~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("1) Insertar alumno.\n");
         printf("2) Eliminar alumno.\n");
         printf("3) Modificar alumno (solo el promedio).\n");
@@ -333,7 +341,7 @@ int main() {
         printf("5) Mostrar alumnos ordenados descendentemente por promedio.\n\n");
         printf("9) Print.\n");
         printf("0) Salir.\n");
-        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
         scanf("%d", &op);
 
         switch (op)
