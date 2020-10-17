@@ -21,6 +21,7 @@ typedef struct Node {
     float promedio;
     struct Node * next;
     struct Node * prev;
+    struct Node * sort;
 } Node;
 
 Node * insertNode(Node * head, char nombre[], float promedio) {
@@ -113,36 +114,38 @@ void printList(Node * head) {
     }
 };
 
-Node * merge(Node * n1, Node * n2) {
-    Node * temp_sort = (Node*)malloc(sizeof(Node));
-    Node * current = temp_sort;
+Node * merge(Node * l1, Node * l2) {
+    Node * sorted = (Node*)malloc(sizeof(Node));
+    Node * current = sorted;
 
-    while(n1 != NULL && n2 != NULL) {
-        if (n1->promedio > n2->promedio) {
-            current->next = n1;
-            n1 = n1->next;
+    while (l1 != NULL || l2 != NULL) {
+        printf("[ %f ] [ %f ]\n", l1->promedio, l2->promedio);
+        if (l1->promedio <= l2->promedio) {
+            current->next = l1;
+            l1 = l1->next;
         }
         else {
-            current->next = n2;
-            n2 = n2->next;
+            current->next = l2;
+            l2 = l2->next;
         }
 
         current = current->next;
     }
-
-    if (n1 != NULL) {
-        current->next = n1;
-        n1 = n1->next;
+    while (l1 != NULL) {
+        printf("L: [ %f ]\n", l1->promedio);
+        current->next = l1;
+        l1 = l1->next;
     }
-    if (n2 != NULL) {
-        current->next = n2;
-        n2 = n2->next;
+    while (l2 != NULL) {
+        printf("R: [ %f ]\n", l2->promedio);
+        current->next = l2;
+        l2 = l2->next;
     }
 
-    return current->next;
+    return sorted->next;
 }
 
-// [head .... temp] [slow .... fast]
+// [head...temp] [slow...fast]
 Node * orderPromedio(Node * head) {
     if (head == NULL || head->next == NULL) return head;
 
@@ -150,7 +153,7 @@ Node * orderPromedio(Node * head) {
     Node * slow = head;
     Node * fast = head;
 
-    while (fast != NULL && fast->next != NULL) {
+    while (fast != NULL) {
         temp = slow;
         slow = slow->next;
         fast = fast->next->next;
@@ -160,18 +163,73 @@ Node * orderPromedio(Node * head) {
     Node * left = orderPromedio(head);
     Node * right = orderPromedio(slow);
 
-    return merge(left, right);
+    Node * sortedList = merge(left, right);
+
+    return sortedList;
 }
 
 void printOrderPromedio(Node * head) {
-    // head = orderPromedio(head);
+    Node * temp = (Node*)malloc(sizeof(Node));
+    Node * newHead = temp;
 
-    printList(head);
+    strcpy(temp->nombre, "Sancho");
+    temp->promedio = head->promedio;
+    temp->next = NULL;
+    temp->prev = NULL;
+
+    head = head->next;
+
+    while (head != NULL) {
+        Node * newNode = (Node*)malloc(sizeof(Node));
+        temp->next = newNode;
+
+        strcpy(newNode->nombre, "Sancho");
+        newNode->promedio = head->promedio;
+        newNode->next = NULL;
+        newNode->prev = temp;
+
+        head = head->next;
+        temp = temp->next;
+    }
+
+    newHead = orderPromedio(newHead);
+
+    printList(newHead);
 
     // while (temp != NULL) {
     //     printf("( %s , %+.2f ), ", temp->nombre, temp->promedio);
     //     temp = temp->next;
     // }
+}
+
+Node * fillList() {
+    Node * temp[3];
+    temp[0] = (Node*)malloc(sizeof(Node));
+    temp[1] = (Node*)malloc(sizeof(Node));
+    temp[2] = (Node*)malloc(sizeof(Node));
+    temp[3] = (Node*)malloc(sizeof(Node));
+
+    strcpy(temp[3]->nombre, "Luis");
+    temp[3]->promedio = 5;
+    temp[3]->next = NULL;
+    temp[3]->prev = temp[2];
+
+    strcpy(temp[2]->nombre, "Angel");
+    temp[2]->promedio = 1;
+    temp[2]->next = temp[3];
+    temp[2]->prev = temp[1];
+
+    strcpy(temp[1]->nombre, "Juan");
+    temp[1]->promedio = 3;
+    temp[1]->next = temp[2];
+    temp[1]->prev = temp[0];
+
+    strcpy(temp[0]->nombre, "Choclo");;
+    temp[0]->promedio = 2;
+    temp[0]->next = temp[1];
+    temp[0]->prev = NULL;
+
+    return temp[0];
 }
 
 int main() {
@@ -218,6 +276,8 @@ int main() {
             getchar();
             break;
         case 4:
+            head = fillList();
+            getchar();
             break;
         case 5:
             printOrderPromedio(head);
