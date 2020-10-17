@@ -62,7 +62,9 @@ Node * deleteNode(Node * head, char nombre[]) {
         return head;
     }
 
-    // Can we refactor ? // Hacerlo mejor pues...
+    /* 
+        Se puede refactorizar el codigo.
+    */
     while (delete != NULL) {
         next = delete->next;
         if (strcmp(delete->nombre, nombre) == 0) {
@@ -140,7 +142,6 @@ Node * mergePromedio(Node * l1, Node * l2) {
     Node * current = sorted;
 
     while (l1 != NULL && l2 != NULL) {
-        // printf("[ %f ] [ %f ]\n", l1->promedio, l2->promedio);
         if (l1->promedio >= l2->promedio) {
             current->next = l1;
             l1 = l1->next;
@@ -154,12 +155,10 @@ Node * mergePromedio(Node * l1, Node * l2) {
     }
 
     while (l1 != NULL) {
-        // printf("L: [ %f ]\n", l1->promedio);
         current->next = l1;
         l1 = l1->next;
     }
     while (l2 != NULL) {
-        // printf("R: [ %f ]\n", l2->promedio);
         current->next = l2;
         l2 = l2->next;
     }
@@ -318,39 +317,6 @@ void printOrderNombre(Node * head) {
     printList(newHead);
 }
 
-/*
-    ONLY TEST: Llena lista con elementos predeterminados.
-*/
-Node * fillList() {
-    Node * temp[3];
-    temp[0] = (Node*)malloc(sizeof(Node));
-    temp[1] = (Node*)malloc(sizeof(Node));
-    temp[2] = (Node*)malloc(sizeof(Node));
-    temp[3] = (Node*)malloc(sizeof(Node));
-
-    strcpy(temp[3]->nombre, "Juan");
-    temp[3]->promedio = 9;
-    temp[3]->next = NULL;
-    temp[3]->prev = temp[2];
-
-    strcpy(temp[2]->nombre, "Luis");
-    temp[2]->promedio = 3.5;
-    temp[2]->next = temp[3];
-    temp[2]->prev = temp[1];
-
-    strcpy(temp[1]->nombre, "Angel");
-    temp[1]->promedio = 7.5;
-    temp[1]->next = temp[2];
-    temp[1]->prev = temp[0];
-
-    strcpy(temp[0]->nombre, "Choclo");
-    temp[0]->promedio = 6;
-    temp[0]->next = temp[1];
-    temp[0]->prev = NULL;
-
-    return temp[0];
-}
-
 int main() {
     Node * head = NULL;
     float promedio;
@@ -365,7 +331,6 @@ int main() {
         printf("3) Modificar alumno (solo el promedio).\n");
         printf("4) Mostrar alumnos ordenados ascendentemente alfabeticamente.\n");
         printf("5) Mostrar alumnos ordenados descendentemente por promedio.\n\n");
-        // printf("8) Llenar lista.\n");
         printf("9) Print.\n");
         printf("0) Salir.\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
@@ -403,10 +368,6 @@ int main() {
             printOrderPromedio(head);
             getchar();getchar();
             break;
-        // case 8:
-        //     head = fillList();
-        //     getchar();
-        //     break;
         case 9:
             printList(head);
             getchar();getchar();
